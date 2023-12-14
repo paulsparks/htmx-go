@@ -1,0 +1,9 @@
+{{ define "navbar" }}
+<nav>
+  <ul>
+    {{ range .NavbarProps.Links }}
+      <li><a href="{{ .URL }}" hx-boost="true">{{ .RouteName }}</a></li>
+    {{ end }}
+  </ul>
+</nav>
+{{ end }}
