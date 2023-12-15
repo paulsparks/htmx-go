@@ -10,6 +10,10 @@
   {{ template "navbar" . }}
   <h1 hx-post="/hello">Click for hello!</h1>
   <h1>HTMX + Go To-Do List</h1>
-  <input type="text" name="todoItem"><button>Create to-do</button>
+  <form>
+    <input type="text" name="todoItem">
+    <button hx-post="/todo" hx-target="#todo-div" hx-swap="innerHTML">Create to-do</button>
+  </form>
+  <div id="todo-div"></div>
 </body>
 </html>

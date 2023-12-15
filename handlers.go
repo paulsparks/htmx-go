@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"html/template"
 	"net/http"
+	"net/url"
 )
 
 // POST routes
@@ -16,6 +17,25 @@ func HelloHandler(w http.ResponseWriter, r *http.Request) {
 
 	w.WriteHeader(http.StatusOK)
 	fmt.Fprintf(w, "Hello, world!")
+}
+
+func TodoHandler(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodPost {
+		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
+		return
+	}
+
+	form := url.Values{}
+
+	err := r.ParseForm()
+	if err != nil {
+		form.Set("todoItem", "Error")
+	}
+
+	form = r.Form
+
+	w.WriteHeader(http.StatusOK)
+	fmt.Fprintf(w, form.Get("todoItem"))
 }
 
 // GET routes
