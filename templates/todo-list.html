@@ -1,7 +1,12 @@
 {{ define "todo-list" }}
-<ul>
+<ul class="shadow-lg flex flex-col gap-4 p-4">
   {{ range .Todos }}
-    <li>{{.ItemString}}</li><button hx-delete="/deletetodo/{{.Id}}" hx-trigger="click" hx-target="#itemList" hx-swap="innerHTML">Delete</button>
+    <li class="flex flex-row place-content-center gap-6 items-center">
+      <p class="basis-1/2">{{.ItemString}}</p>
+      <button class="basis-1/4 bg-red-100 rounded-lg h-[40px]" hx-delete="/deletetodo/{{.Id}}" hx-trigger="click" hx-target="#itemList" hx-swap="innerHTML">
+        Delete
+      </button>
+    </li>
   {{ end }}
 </ul>
 {{ end }}

@@ -2,7 +2,7 @@
 <nav>
   <ul>
     {{ range .NavbarProps.Links }}
-      <li><a href="{{ .URL }}" hx-boost="true">{{ .RouteName }}</a></li>
+      <li class="text-center"><a href="{{ .URL }}" hx-boost="true">{{ .RouteName }}</a></li>
     {{ end }}
   </ul>
 </nav>
