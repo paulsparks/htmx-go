@@ -1,20 +1,14 @@
 package main
 
 import (
+	delete_handlers "htmx-go/handlers/DELETE"
+	get_handlers "htmx-go/handlers/GET"
+	post_handlers "htmx-go/handlers/POST"
 	"log"
 	"net/http"
 
 	"github.com/gorilla/mux"
 )
-
-type NavbarProps struct {
-	Links []Link
-}
-
-type Link struct {
-	RouteName string
-	URL       string
-}
 
 func main() {
 	r := mux.NewRouter()
@@ -28,20 +22,20 @@ func main() {
 	CreateTableIfNotExists(dbpool)
 
 	// page routes
-	r.HandleFunc("/", IndexHandler)
-	r.HandleFunc("/test", TestHandler)
+	r.HandleFunc("/", get_handlers.IndexHandler)
+	r.HandleFunc("/test", get_handlers.TestHandler)
 
 	// POST endpoints
 	r.HandleFunc("/fetchtodo", func(w http.ResponseWriter, r *http.Request) {
-		FetchTodoHandler(w, r, dbpool)
+		post_handlers.FetchTodoHandler(w, r, dbpool)
 	})
 	r.HandleFunc("/todo", func(w http.ResponseWriter, r *http.Request) {
-		TodoHandler(w, r, dbpool)
+		post_handlers.TodoHandler(w, r, dbpool)
 	})
 
 	// DELETE endpoints
 	r.HandleFunc("/deletetodo/{id:[0-9]+}", func(w http.ResponseWriter, r *http.Request) {
-		DeleteTodoHandler(w, r, dbpool)
+		delete_handlers.DeleteTodoHandler(w, r, dbpool)
 	})
 
 	http.Handle("/", r)
