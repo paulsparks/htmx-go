@@ -1,0 +1,7 @@
+{{ define "todo-list" }}
+<ul>
+  {{ range .Todos }}
+    <li>{{.ItemString}}</li><button hx-delete="/deletetodo/{{.Id}}" hx-trigger="click" hx-target="#itemList" hx-swap="innerHTML">Delete</button>
+  {{ end }}
+</ul>
+{{ end }}

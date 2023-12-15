@@ -8,12 +8,13 @@
 </head>
 <body>
   {{ template "navbar" . }}
-  <h1 hx-post="/hello">Click for hello!</h1>
   <h1>HTMX + Go To-Do List</h1>
-  <form>
-    <input type="text" name="todoItem">
-    <button hx-post="/todo" hx-target="#todo-div" hx-swap="innerHTML">Create to-do</button>
+  <form id="todoForm" hx-post="/todo" hx-trigger="submit" hx-target="#itemList" hx-swap="innerHTML">
+    <input type="text" name="todoItem" placeholder="Add a new todo item" required>
+    <button type="submit">Add</button>
   </form>
-  <div id="todo-div"></div>
+  <div id="itemList" hx-post="/fetchtodo" hx-trigger="load">
+    {{ template "todo-list" . }}
+  </div>
 </body>
 </html>

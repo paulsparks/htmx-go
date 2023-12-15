@@ -1,8 +1,6 @@
 package main
 
 import (
-	"context"
-	"fmt"
 	"log"
 	"net/http"
 
@@ -21,27 +19,30 @@ type Link struct {
 func main() {
 	r := mux.NewRouter()
 
-	conn, err := ConnectToDb()
+	dbpool, err := ConnectToDb()
 	if err != nil {
 		log.Fatal(err)
 	}
-	defer conn.Close(context.Background())
+	defer dbpool.Close()
 
-	var greeting string
-	err = conn.QueryRow(context.Background(), "SELECT 'Hello, world!'").Scan(&greeting)
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	fmt.Println(greeting)
+	CreateTableIfNotExists(dbpool)
 
 	// page routes
 	r.HandleFunc("/", IndexHandler)
 	r.HandleFunc("/test", TestHandler)
 
 	// POST endpoints
-	r.HandleFunc("/hello", HelloHandler)
-	r.HandleFunc("/todo", TodoHandler)
+	r.HandleFunc("/fetchtodo", func(w http.ResponseWriter, r *http.Request) {
+		FetchTodoHandler(w, r, dbpool)
+	})
+	r.HandleFunc("/todo", func(w http.ResponseWriter, r *http.Request) {
+		TodoHandler(w, r, dbpool)
+	})
+
+	// DELETE endpoints
+	r.HandleFunc("/deletetodo/{id:[0-9]+}", func(w http.ResponseWriter, r *http.Request) {
+		DeleteTodoHandler(w, r, dbpool)
+	})
 
 	http.Handle("/", r)
 	http.ListenAndServe(":8080", nil)
