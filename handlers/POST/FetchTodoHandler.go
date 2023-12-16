@@ -1,7 +1,7 @@
-package post_handlers
+package post
 
 import (
-	"htmx-go/helper_functions"
+	"htmx-go/reusedqueries"
 	"net/http"
 
 	"github.com/jackc/pgx/v5/pgxpool"
@@ -13,5 +13,5 @@ func FetchTodoHandler(w http.ResponseWriter, r *http.Request, dbpool *pgxpool.Po
 		return
 	}
 
-	helper_functions.QueryAllTodos(w, r, dbpool)
+	reusedqueries.QueryAllTodos(w, r, dbpool)
 }

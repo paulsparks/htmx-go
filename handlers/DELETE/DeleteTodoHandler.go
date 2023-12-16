@@ -1,8 +1,8 @@
-package delete_handlers
+package delete
 
 import (
 	"context"
-	"htmx-go/helper_functions"
+	"htmx-go/reusedqueries"
 	"net/http"
 
 	"github.com/gorilla/mux"
@@ -34,5 +34,5 @@ func DeleteTodoHandler(w http.ResponseWriter, r *http.Request, dbpool *pgxpool.P
 		http.Error(w, "Database error", http.StatusInternalServerError)
 	}
 
-	helper_functions.QueryAllTodos(w, r, dbpool)
+	reusedqueries.QueryAllTodos(w, r, dbpool)
 }

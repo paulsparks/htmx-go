@@ -1,18 +1,17 @@
-package get_handlers
+package get
 
 import (
 	"html/template"
-	"htmx-go/helper_functions"
 	"net/http"
 )
 
 func TestHandler(w http.ResponseWriter, r *http.Request) {
 	props := struct {
-		NavbarProps helper_functions.NavbarProps
+		NavbarProps NavbarProps
 		Title       string
 	}{
-		NavbarProps: helper_functions.NavbarProps{
-			Links: []helper_functions.Link{
+		NavbarProps: NavbarProps{
+			Links: []Link{
 				{RouteName: "Home", URL: "/"},
 			},
 		},

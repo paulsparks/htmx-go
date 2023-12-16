@@ -1,24 +1,37 @@
-package get_handlers
+package get
 
 import (
 	"html/template"
-	"htmx-go/helper_functions"
 	"net/http"
 )
 
+type Link struct {
+	RouteName string
+	URL       string
+}
+
+type NavbarProps struct {
+	Links []Link
+}
+
+type TodoItem struct {
+	Id         int
+	ItemString string
+}
+
 func IndexHandler(w http.ResponseWriter, r *http.Request) {
 	props := struct {
-		NavbarProps helper_functions.NavbarProps
+		NavbarProps NavbarProps
 		Title       string
-		Todos       []helper_functions.TodoItem
+		Todos       []TodoItem
 	}{
-		NavbarProps: helper_functions.NavbarProps{
-			Links: []helper_functions.Link{
+		NavbarProps: NavbarProps{
+			Links: []Link{
 				{RouteName: "Test", URL: "/test"},
 			},
 		},
 		Title: "Go-HTMX Home",
-		Todos: []helper_functions.TodoItem{},
+		Todos: []TodoItem{},
 	}
 
 	tmpl, err := template.ParseFiles("./public/index.html", "./templates/navbar.html", "./templates/todo-list.html")

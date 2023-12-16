@@ -1,7 +1,8 @@
-package helper_functions
+package reusedqueries
 
 import (
 	"context"
+	gethandler "htmx-go/handlers/GET"
 	"net/http"
 	"text/template"
 
@@ -23,7 +24,7 @@ func QueryAllTodos(w http.ResponseWriter, r *http.Request, dbpool *pgxpool.Pool)
 	}
 	defer rows.Close()
 
-	var todoItems []TodoItem
+	var todoItems []gethandler.TodoItem
 
 	for rows.Next() {
 		var todoItemId int
@@ -32,7 +33,7 @@ func QueryAllTodos(w http.ResponseWriter, r *http.Request, dbpool *pgxpool.Pool)
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 			return
 		}
-		todoItems = append(todoItems, TodoItem{todoItemId, todoItemString})
+		todoItems = append(todoItems, gethandler.TodoItem{Id: todoItemId, ItemString: todoItemString})
 	}
 
 	err = transaction.Commit(context.Background())
@@ -48,7 +49,7 @@ func QueryAllTodos(w http.ResponseWriter, r *http.Request, dbpool *pgxpool.Pool)
 	}
 
 	props := struct {
-		Todos []TodoItem
+		Todos []gethandler.TodoItem
 	}{
 		Todos: todoItems,
 	}

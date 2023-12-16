@@ -1,9 +1,9 @@
 package main
 
 import (
-	delete_handlers "htmx-go/handlers/DELETE"
-	get_handlers "htmx-go/handlers/GET"
-	post_handlers "htmx-go/handlers/POST"
+	deletehandler "htmx-go/handlers/DELETE"
+	gethandler "htmx-go/handlers/GET"
+	posthandler "htmx-go/handlers/POST"
 	"log"
 	"net/http"
 
@@ -21,21 +21,21 @@ func main() {
 
 	CreateTableIfNotExists(dbpool)
 
-	// page routes
-	r.HandleFunc("/", get_handlers.IndexHandler)
-	r.HandleFunc("/test", get_handlers.TestHandler)
+	// GET endpoints
+	r.HandleFunc("/", gethandler.IndexHandler)
+	r.HandleFunc("/test", gethandler.TestHandler)
 
 	// POST endpoints
 	r.HandleFunc("/fetchtodo", func(w http.ResponseWriter, r *http.Request) {
-		post_handlers.FetchTodoHandler(w, r, dbpool)
+		posthandler.FetchTodoHandler(w, r, dbpool)
 	})
 	r.HandleFunc("/todo", func(w http.ResponseWriter, r *http.Request) {
-		post_handlers.TodoHandler(w, r, dbpool)
+		posthandler.TodoHandler(w, r, dbpool)
 	})
 
 	// DELETE endpoints
 	r.HandleFunc("/deletetodo/{id:[0-9]+}", func(w http.ResponseWriter, r *http.Request) {
-		delete_handlers.DeleteTodoHandler(w, r, dbpool)
+		deletehandler.DeleteTodoHandler(w, r, dbpool)
 	})
 
 	http.Handle("/", r)
