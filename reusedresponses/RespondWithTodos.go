@@ -1,4 +1,4 @@
-package reusedqueries
+package reusedresponses
 
 import (
 	"context"
@@ -9,7 +9,7 @@ import (
 	"github.com/jackc/pgx/v5/pgxpool"
 )
 
-func QueryAllTodos(w http.ResponseWriter, r *http.Request, dbpool *pgxpool.Pool) {
+func RespondWithTodos(w http.ResponseWriter, r *http.Request, dbpool *pgxpool.Pool) {
 	transaction, err := dbpool.Begin(context.Background())
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)

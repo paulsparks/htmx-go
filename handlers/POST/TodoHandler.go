@@ -2,7 +2,7 @@ package post
 
 import (
 	"context"
-	"htmx-go/reusedqueries"
+	"htmx-go/reusedresponses"
 	"net/http"
 	"net/url"
 
@@ -41,5 +41,5 @@ func TodoHandler(w http.ResponseWriter, r *http.Request, dbpool *pgxpool.Pool) {
 		http.Error(w, "Database error", http.StatusInternalServerError)
 	}
 
-	reusedqueries.QueryAllTodos(w, r, dbpool)
+	reusedresponses.RespondWithTodos(w, r, dbpool)
 }

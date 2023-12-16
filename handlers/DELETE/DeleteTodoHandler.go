@@ -2,7 +2,7 @@ package delete
 
 import (
 	"context"
-	"htmx-go/reusedqueries"
+	"htmx-go/reusedresponses"
 	"net/http"
 
 	"github.com/gorilla/mux"
@@ -34,5 +34,5 @@ func DeleteTodoHandler(w http.ResponseWriter, r *http.Request, dbpool *pgxpool.P
 		http.Error(w, "Database error", http.StatusInternalServerError)
 	}
 
-	reusedqueries.QueryAllTodos(w, r, dbpool)
+	reusedresponses.RespondWithTodos(w, r, dbpool)
 }
