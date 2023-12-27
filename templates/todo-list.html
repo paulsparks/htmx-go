@@ -6,6 +6,7 @@
       <button class="basis-1/4 bg-red-100 rounded-lg h-[40px]" hx-delete="/deletetodo/{{.Id}}" hx-trigger="click" hx-target="#itemList" hx-swap="innerHTML">
         Delete
       </button>
+      <a class="basis-1/6 bg-blue-100 rounded-lg h-[40px] flex items-center justify-center" href="/updatetodoform/{{.Id}}" hx-boost><button>Edit</button></a>
     </li>
   {{ end }}
 </ul>
